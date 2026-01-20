@@ -85,11 +85,17 @@
                     <h2 class="font-medium text-secondary text-lg mb-5 lg:text-2xl">Software <span class="text-dark dark:text-white">Engineering</span></h2>
                     <p class="font-medium text-slate-400 mb-10 leading-relaxed"> Kesuksesan bukan hanya untuk orang pintar 
                         tetapi Kesuksesan adalah orang yang selalu <span class="text-dark font-bold dark:text-white">berusaha</span></p>
-
-                    <a href="#contact" class="text-base font-semibold text-white bg-primary py-3 px-8 rounded-full 
-                        hover:shadow-lg hover:opacity-80 transition duration-300 ease-in-out ">
-                        Hubungi Saya
-                    </a>
+                    <div class="flex flex-wrap items-center gap-1">
+                        <a href="#contact" 
+                        class="text-base font-semibold text-white bg-primary py-3 px-8 rounded-full 
+                                hover:shadow-lg hover:opacity-80 transition duration-300 ease-in-out">
+                            Hubungi Saya
+                        </a>
+                        <a href="dist/cv/tugas cv.pdf" download class="text-base font-semibold text-primary border border-primary py-3 px-8 rounded-full 
+                                hover:bg-primary hover:text-white hover:shadow-lg transition duration-300 ease-in-out">
+                            Download CV
+                        </a>
+                    </div>
                 </div>
                  <div class="w-full lg:w-1/2 flex justify-center">
                     <div class="relative mt-10 lg:mt-9 lg:right-0">
@@ -384,5 +390,46 @@
                 </a>
             <!-- back to top end -->
       <script src="dist/js/script.js"></script>
+
+    <!-- script text berjalan -->
+<script>
+  const texts = [
+    "Engineering",
+    "Developer",
+    "Web Programmer",
+    "UI Designer"
+  ];
+
+  let index = 0;
+  let charIndex = 0;
+  const speed = 100;
+  const eraseSpeed = 50;
+  const delay = 1500;
+
+  const typingText = document.getElementById("typing-text");
+
+  function type() {
+    if (charIndex < texts[index].length) {
+      typingText.textContent += texts[index].charAt(charIndex);
+      charIndex++;
+      setTimeout(type, speed);
+    } else {
+      setTimeout(erase, delay);
+    }
+  }
+
+  function erase() {
+    if (charIndex > 0) {
+      typingText.textContent = texts[index].substring(0, charIndex - 1);
+      charIndex--;
+      setTimeout(erase, eraseSpeed);
+    } else {
+      index = (index + 1) % texts.length;
+      setTimeout(type, speed);
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", type);
+</script>
 </body>
 </html>
