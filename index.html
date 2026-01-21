@@ -322,7 +322,7 @@
             <div class="container">
                 <div class="flex flex-wrap">
                     <div class="w-full px-4 mb-12 text-slate-300 font-medium md:w-1/3">
-                        <h2 class="font-bold text-4xl text-white mb-5">GLK</h2>
+                        <h2 class="font-bold text-4xl text-white mb-5">JAYY</h2>
                         <h3 class="font-bold text-2xl mb-2">Hubungi Kami</h3>
                         <p>jaya@gmail.com</p>
                         <p>Jl. Haji Gofur No. 20</p>
@@ -445,7 +445,7 @@
 
 <script>
   (function(){
-    emailjs.init("Yw4HDxHfy3oP0ZF6e"); // ← ganti
+    emailjs.init("Yw4HDxHfy3oP0ZF6e"); 
   })();
 
   document.getElementById("contact-form")
@@ -453,8 +453,8 @@
       e.preventDefault();
 
       emailjs.sendForm(
-        "service_z5dswm8",     // ganti
-        "template_0qb6jah",    // ganti
+        "service_z5dswm8",     
+        "template_0qb6jah",    
         this
       )
       .then(() => {
