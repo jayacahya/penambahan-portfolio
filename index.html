@@ -440,6 +440,32 @@
 
   document.addEventListener("DOMContentLoaded", type);
 </script>
+<!-- EmailJS -->
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 
+<script>
+  (function(){
+    emailjs.init("Yw4HDxHfy3oP0ZF6e"); // ← ganti
+  })();
+
+  document.getElementById("contact-form")
+    .addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      emailjs.sendForm(
+        "service_z5dswm8",     // ganti
+        "template_0qb6jah",    // ganti
+        this
+      )
+      .then(() => {
+        alert("Pesan berhasil dikirim ");
+        this.reset();
+      })
+      .catch((error) => {
+        alert("Gagal mengirim pesan!!! ");
+        console.error(error);
+      });
+    });
+</script>
 </body>
 </html>
