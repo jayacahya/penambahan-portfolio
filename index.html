@@ -9,13 +9,66 @@
       if (
         localStorage.theme === "dark" ||
         (!("theme" in localStorage) &&
-          window.matchMedia("(prefers-color-scheme: dark )").matches)
+          window.matchMedia("(prefers-color-scheme: dark)").matches)
       ) {
         document.documentElement.classList.add("dark");
       } else {
         document.documentElement.classList.remove("dark");
       }
     </script>
+    <script>
+      const maxWords = 23;
+
+      function toggleText(id, button) {
+        const element = document.getElementById(id);
+        const originalText = element.getAttribute("data-full");
+        const words = originalText.split(" ");
+
+        if (button.innerText === "Baca Selengkapnya") {
+          element.innerText = originalText;
+          button.innerText = "Tutup";
+        } else {
+          element.innerText = words.slice(0, maxWords).join(" ") + "...";
+          button.innerText = "Baca Selengkapnya";
+        }
+      }
+
+      window.onload = function () {
+        document.querySelectorAll("p[id^='desc']").forEach((element) => {
+          const text = element.innerText.trim();
+          const words = text.split(" ");
+
+          if (words.length > maxWords) {
+            element.setAttribute("data-full", text);
+            element.innerText = words.slice(0, maxWords).join(" ") + "...";
+          }
+        });
+      };
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const skillBars = document.querySelectorAll(".skill-bar");
+
+        const revealSkills = () => {
+          skillBars.forEach((bar) => {
+            const rect = bar.getBoundingClientRect();
+            if (rect.top < window.innerHeight - 100) {
+              bar.style.width = bar.dataset.width;
+            }
+          });
+        };
+
+        window.addEventListener("scroll", revealSkills);
+        revealSkills(); // langsung cek saat load
+      });
+    </script>
+
+    <style>
+      .skill-bar {
+        width: 0;
+        transition: width 1.5s ease-in-out;
+      }
+    </style>
   </head>
   <body>
     <!-- header start -->
@@ -56,42 +109,49 @@
                 <li class="group">
                   <a
                     href="#home"
-                    class="font-medium text-base text-secondary py-2 px-6 flex hover:text-primary dark:text-white transition duration-300"
+                    class="font-medium text-base text-secondary py-2 px-6 flex hover:text-primary dark:text-white dark:hover:text-primary transition duration-300"
                     >Beranda</a
                   >
                 </li>
                 <li class="group">
                   <a
                     href="#about"
-                    class="font-medium text-base text-secondary py-2 px-6 flex hover:text-primary dark:text-white transition duration-300"
+                    class="font-medium text-base text-secondary py-2 px-6 flex hover:text-primary dark:text-white dark:hover:text-primary transition duration-300"
                     >Tentang Saya</a
                   >
                 </li>
                 <li class="group">
                   <a
                     href="#portfolio"
-                    class="font-medium text-base text-secondary py-2 px-6 flex hover:text-primary dark:text-white transition duration-300"
+                    class="font-medium text-base text-secondary py-2 px-6 flex hover:text-primary dark:text-white dark:hover:text-primary transition duration-300"
                     >Portfolio</a
                   >
                 </li>
                 <li class="group">
                   <a
+                    href="#skills"
+                    class="font-medium text-base text-secondary py-2 px-6 flex hover:text-primary dark:text-white dark:hover:text-primary transition duration-300"
+                    >Skills</a
+                  >
+                </li>
+                <li class="group">
+                  <a
                     href="#clients"
-                    class="font-medium text-base text-secondary py-2 px-6 flex hover:text-primary dark:text-white transition duration-300"
+                    class="font-medium text-base text-secondary py-2 px-6 flex hover:text-primary dark:text-white dark:hover:text-primary transition duration-300"
                     >Clients</a
                   >
                 </li>
                 <li class="group">
                   <a
                     href="#blog"
-                    class="font-medium text-base text-secondary py-2 px-6 flex hover:text-primary dark:text-white transition duration-300"
+                    class="font-medium text-base text-secondary py-2 px-6 flex hover:text-primary dark:text-white dark:hover:text-primary transition duration-300"
                     >Blog</a
                   >
                 </li>
                 <li class="group">
                   <a
                     href="#contact"
-                    class="font-medium text-base text-secondary py-2 px-6 flex hover:text-primary dark:text-white transition duration-300"
+                    class="font-medium text-base text-secondary py-2 px-6 flex hover:text-primary dark:text-white dark:hover:text-primary transition duration-300"
                     >Contact</a
                   >
                 </li>
@@ -133,8 +193,9 @@
             >
               Halo semuanya👋,saya
               <span
+                id="nama"
                 class="block font-bold text-slate-900 text-dark text-4xl mt-1 lg:text-5xl dark:text-white"
-                >Jaya Cahya
+              >
               </span>
             </h1>
             <!-- <h2 class="font-medium text-secondary text-lg mb-5 lg:text-2xl">I 'am Software <span class="text-dark dark:text-white">Engineering</span></h2> -->
@@ -502,6 +563,100 @@
     </section>
     <!-- porfolio end -->
 
+    <!-- skills start -->
+    <section id="skills" class="pt-36 pb-32 bg-white dark:bg-slate-900">
+      <div class="container">
+        <div class="w-full px-4">
+          <div class="max-w-xl mx-auto text-center mb-16">
+            <h4 class="font-semibold text-lg text-primary mb-2">Skills</h4>
+            <h2
+              class="font-bold text-dark text-3xl mb-4 sm:text-4xl lg:text-5xl dark:text-white"
+            >
+              Kemampuan Saya
+            </h2>
+            <p class="font-medium text-md text-secondary md:text-lg">
+              Beberapa teknologi yang saya pelajari dan gunakan dalam project.
+            </p>
+          </div>
+        </div>
+
+        <div class="w-full px-4 lg:w-2/3 mx-auto space-y-8">
+          <!-- Skill Item -->
+          <div>
+            <div class="flex justify-between mb-2">
+              <span class="font-semibold text-dark dark:text-white">HTML</span>
+              <span class="text-primary font-semibold">90%</span>
+            </div>
+            <div class="w-full bg-slate-200 rounded-full h-3 dark:bg-slate-700">
+              <div
+                class="skill-bar bg-primary h-3 rounded-full"
+                data-width="90%"
+              ></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex justify-between mb-2">
+              <span class="font-semibold text-dark dark:text-white"
+                >CSS / Tailwind</span
+              >
+              <span class="text-primary font-semibold">85%</span>
+            </div>
+            <div class="w-full bg-slate-200 rounded-full h-3 dark:bg-slate-700">
+              <div
+                class="skill-bar bg-primary h-3 rounded-full"
+                data-width="85%"
+              ></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex justify-between mb-2">
+              <span class="font-semibold text-dark dark:text-white"
+                >JavaScript</span
+              >
+              <span class="text-primary font-semibold">75%</span>
+            </div>
+            <div class="w-full bg-slate-200 rounded-full h-3 dark:bg-slate-700">
+              <div
+                class="skill-bar bg-primary h-3 rounded-full"
+                data-width="75%"
+              ></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex justify-between mb-2">
+              <span class="font-semibold text-dark dark:text-white">PHP</span>
+              <span class="text-primary font-semibold">70%</span>
+            </div>
+            <div class="w-full bg-slate-200 rounded-full h-3 dark:bg-slate-700">
+              <div
+                class="skill-bar bg-primary h-3 rounded-full"
+                data-width="70%"
+              ></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex justify-between mb-2">
+              <span class="font-semibold text-dark dark:text-white"
+                >Laravel</span
+              >
+              <span class="text-primary font-semibold">65%</span>
+            </div>
+            <div class="w-full bg-slate-200 rounded-full h-3 dark:bg-slate-700">
+              <div
+                class="skill-bar bg-primary h-3 rounded-full"
+                data-width="65%"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- skills end -->
+
     <!-- client start -->
     <section id="clients" class="pt-36 pb-32 bg-slate-900 dark:bg-slate-300">
       <div class="container">
@@ -514,8 +669,9 @@
               Yang pernah bekerja sama
             </h2>
             <p class="font-medium text-md text-secondary md:text-lg">
-             Client yang pernah mempercayakan project-nya kepada saya
-             <br> Terima kasih atas kepercayaannya 🤝.
+              Client yang pernah mempercayakan project-nya kepada saya
+              <br />
+              Terima kasih atas kepercayaannya 🤝.
             </p>
           </div>
         </div>
@@ -545,8 +701,10 @@
               Tulisan Terkini
             </h2>
             <p class="font-medium text-md text-secondary md:text-lg">
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-              Reiciendis ipsam laudantium repudiandae itaque.
+              Kumpulan artikel terbaru seputar dunia programming, teknologi, dan
+              pengalaman belajar yang saya rangkum secara sederhana, praktis,
+              dan mudah dipahami untuk membantu meningkatkan skill dan wawasan
+              Anda.
             </p>
           </div>
         </div>
@@ -564,19 +722,21 @@
                     >Belajar Menjadi Programming</a
                   >
                 </h3>
-                <p class="font-medium text-base text-secondary mb-6">
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                  Obcaecati nulla tenetur blanditiis. Labore eveniet sed
-                  doloribus laudantium alias voluptatum ex. Atque, repellat
-                  itaque assumenda iusto eius eos porro, nulla excepturi odio
-                  quis aspernatur veritatis vel. Aperiam tempore omnis itaque
-                  dolorum.
+                <p id="desc1" class="font-medium text-base text-secondary mb-6">
+                  Programming bukan hanya tentang menulis kode, tetapi tentang
+                  bagaimana kita memecahkan masalah dengan logika yang
+                  terstruktur. Dalam artikel ini saya membahas perjalanan
+                  belajar coding dari nol, kesalahan yang sering terjadi, dan
+                  tips agar lebih cepat memahami konsep dasar seperti variable,
+                  function, dan database.
                 </p>
-                <a
-                  href="#"
+
+                <button
+                  onclick="toggleText('desc1', this)"
                   class="font-medium text-sm text-white bg-primary py-2 px-4 rounded-lg hover:opacity-80"
-                  >Baca Selengkapnya</a
                 >
+                  Baca Selengkapnya
+                </button>
               </div>
             </div>
           </div>
@@ -593,19 +753,19 @@
                     >Review Keyboard</a
                   >
                 </h3>
-                <p class="font-medium text-base text-secondary mb-6">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. A
-                  doloremque assumenda suscipit quos reiciendis sit ipsum
-                  exercitationem atque doloribus, eos veniam. Dolorem, quas
-                  architecto qui nam odit nihil obcaecati a distinctio,
-                  officiis, adipisci ratione. Dolore officia sit earum
-                  recusandae doloribus.
+                <p id="desc2" class="font-medium text-base text-secondary mb-6">
+                  Keyboard bukan hanya alat mengetik, tapi juga bagian penting
+                  dari pengalaman bekerja atau gaming. Di artikel ini saya
+                  mereview keyboard mechanical dari segi kenyamanan, build
+                  quality, hingga suara switch yang dihasilkan.
                 </p>
-                <a
-                  href="#"
+
+                <button
+                  onclick="toggleText('desc2', this)"
                   class="font-medium text-sm text-white bg-primary py-2 px-4 rounded-lg hover:opacity-80"
-                  >Baca Selengkapnya</a
                 >
+                  Baca Selengkapnya
+                </button>
               </div>
             </div>
           </div>
@@ -622,18 +782,19 @@
                     >Error Code</a
                   >
                 </h3>
-                <p class="font-medium text-base text-secondary mb-6">
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                  Culpa hic qui, soluta optio nihil ea perspiciatis! Totam illum
-                  voluptas neque! Saepe minima veritatis dicta quasi, magnam,
-                  illum assumenda commodi soluta fugit aliquam nostrum ex omnis
-                  ipsam sapiente necessitatibus natus iure!
+                <p id="desc3" class="font-medium text-base text-secondary mb-6">
+                  Error adalah bagian dari kehidupan seorang programmer. Artikel
+                  ini membahas beberapa error yang sering muncul saat coding,
+                  bagaimana cara membaca pesan error dengan benar, dan strategi
+                  debugging agar lebih cepat menemukan solusi.
                 </p>
-                <a
-                  href="#"
+
+                <button
+                  onclick="toggleText('desc3', this)"
                   class="font-medium text-sm text-white bg-primary py-2 px-4 rounded-lg hover:opacity-80"
-                  >Baca Selengkapnya</a
                 >
+                  Baca Selengkapnya
+                </button>
               </div>
             </div>
           </div>
@@ -655,8 +816,9 @@
             </h2>
             <p class="font-medium text-md text-secondary md:text-lg">
               Punya ide, project, atau sekadar mau ngobrol santai?
-              <br>
+              <br />
               Jangan ragu buat hubungi saya lewat kontak di bawah.
+            </p>
           </div>
         </div>
         <form id="contact-form">
@@ -856,7 +1018,7 @@
             </a>
           </div>
           <p class="font-medium text-sm text-slate-500 text-center">
-            Dibuat oleh 
+            Dibuat oleh
             <a
               href="https:instagram.com/jaya_c.n"
               target="_blank"
@@ -881,47 +1043,66 @@
     <script src="dist/js/script.js"></script>
 
     <!-- script text berjalan -->
+    <script>
+      const text = "Jaya Cahya";
+      let index = 0;
 
+      function typeOnce() {
+        if (index < text.length) {
+          document.getElementById("nama").textContent += text.charAt(index);
+          index++;
+          setTimeout(typeOnce, 100);
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", typeOnce);
+    </script>
     <!-- script text berjalan -->
     <script>
       const texts = [
         "Engineering",
         "Developer",
         "Web Programmer",
-        "UI Designer",
+        "UI UX Designer",
       ];
 
-      let index = 0;
+      let textIndex = 0;
       let charIndex = 0;
       const speed = 100;
       const eraseSpeed = 50;
       const delay = 1500;
 
-      const typingText = document.getElementById("typing-text");
+      document.addEventListener("DOMContentLoaded", () => {
+        const typingText = document.getElementById("typing-text");
 
-      function type() {
-        if (charIndex < texts[index].length) {
-          typingText.textContent += texts[index].charAt(charIndex);
-          charIndex++;
-          setTimeout(type, speed);
-        } else {
-          setTimeout(erase, delay);
+        function type() {
+          if (charIndex < texts[textIndex].length) {
+            typingText.textContent += texts[textIndex].charAt(charIndex);
+            charIndex++;
+            setTimeout(type, speed);
+          } else {
+            setTimeout(erase, delay);
+          }
         }
-      }
 
-      function erase() {
-        if (charIndex > 0) {
-          typingText.textContent = texts[index].substring(0, charIndex - 1);
-          charIndex--;
-          setTimeout(erase, eraseSpeed);
-        } else {
-          index = (index + 1) % texts.length;
-          setTimeout(type, speed);
+        function erase() {
+          if (charIndex > 0) {
+            typingText.textContent = texts[textIndex].substring(
+              0,
+              charIndex - 1,
+            );
+            charIndex--;
+            setTimeout(erase, eraseSpeed);
+          } else {
+            textIndex = (textIndex + 1) % texts.length;
+            setTimeout(type, speed);
+          }
         }
-      }
 
-      document.addEventListener("DOMContentLoaded", type);
+        type();
+      });
     </script>
+
     <!-- EmailJS -->
     <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 
@@ -950,6 +1131,23 @@
               console.error(error);
             });
         });
+    </script>
+
+    <script>
+      const hamburger = document.getElementById("hamburger");
+      const navMenu = document.getElementById("nav-menu");
+
+      // toggle menu
+      hamburger.addEventListener("click", function () {
+        navMenu.classList.toggle("hidden");
+      });
+
+      // AUTO CLOSE saat link diklik (INI YANG PENTING)
+      document.querySelectorAll("#nav-menu a").forEach((link) => {
+        link.addEventListener("click", () => {
+          navMenu.classList.add("hidden");
+        });
+      });
     </script>
   </body>
 </html>
